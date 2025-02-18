@@ -29,7 +29,7 @@ const clienteSchema = new mongoose.Schema({
         type: Number,
         required: true
     }
-});
+},{ collection: 'clientes' });
 
 const Cliente = mongoose.model('Cliente', clienteSchema);
 

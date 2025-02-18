@@ -25,7 +25,7 @@ const articuloSchema = new mongoose.Schema({
         type: Number,
         required: true
     }
-});
+},{ collection: 'articulos' });
 
 const Articulo = mongoose.model('Articulo', articuloSchema);
 
