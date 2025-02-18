@@ -1,0 +1,21 @@
+{
+  "name": "my-mvc-app",
+  "version": "1.0.0",
+  "description": "A simple MVC application in JavaScript",
+  "main": "src/app.js",
+  "scripts": {
+    "start": "node src/app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.17.1",
+    "mongo": "^0.1.0",
+    "mongodb": "^6.13.0",
+    "mongoose": "^8.10.1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
