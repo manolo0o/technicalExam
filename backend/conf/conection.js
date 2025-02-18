@@ -22,7 +22,7 @@ module.exports = class Connect {
         this.#host = process.env.MONGO_HOST;
         this.#cluster = process.env.MONGO_CLUSTER;
         this.#dbName = process.env.MONGO_DBNAME;
-        this.uri = `mongodb+srv://${this.#user}:${this.#pass}@${this.#cluster}/${this.#dbName}?retryWrites=true&w=majority`;
+        this.uri = `${this.#host}${this.#user}:${this.#pass}@${this.#cluster}:${this.#port}/${this.#dbName}`;
         this.open();
         Connect.instance = this;
         return this;
@@ -30,7 +30,7 @@ module.exports = class Connect {
 
     async open() {
         try {
-            this.#connection = await mongoose.connect(this.uri, { useNewUrlParser: true, useUnifiedTopology: true });
+            this.#connection = await mongoose.connect(this.uri);
             console.log("MongoDB connection established successfully");
         } catch (error) {
             console.error("MongoDB connection failed", error);

@@ -1,17 +1,14 @@
 const express = require('express');
-const bodyParser = require('body-parser');
-const IndexController = require('./controllers/index').IndexController;
+const mongoose = require('mongoose');
+const Connect = require('./conf/conection.js');
+const cors = require('cors');
+const db = new Connect();
 
 const app = express();
 const port = process.env.PORT || 3000;
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(express.static('public'));
-
-const indexController = new IndexController();
-
-app.get('/', indexController.getIndex.bind(indexController));
+app.use(cors());
+app.use(express.json());
 
 app.listen(port, () => {
     console.log(`Server is running on http://localhost:${port}`);
