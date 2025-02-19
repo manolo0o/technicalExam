@@ -3,7 +3,21 @@ const Cliente = require('../models/cliente_model.js');
 // Get all clients
 exports.getAllClients = async (req, res) => {
     try {
-        const clients = await Cliente.find();
+        const searchTerm = req.query.search;
+        let clients;
+        if (searchTerm) {
+            clients = await Cliente.find({
+                $or: [
+                    { Cl_Nombre: { $regex: searchTerm, $options: 'i' } },
+                    { Cl_Apellido: { $regex: searchTerm, $options: 'i' } },
+                    { Cl_Contacto: { $regex: searchTerm, $options: 'i' } },
+                    { Cl_Nit: { $regex: searchTerm, $options: 'i' } },
+                    { Cl_Documento: { $regex: searchTerm, $options: 'i' } }
+                ]
+            });
+        } else {
+            clients = await Cliente.find();
+        }
         res.status(200).json(clients);
     } catch (error) {
         res.status(500).json({ message: error.message });

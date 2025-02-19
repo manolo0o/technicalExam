@@ -4,7 +4,7 @@ const {
     getAllArticles,
     getArticleById,
     createArticle
-} = require('../controllers/aticulo_controller.js');
+} = require('../controllers/articulo_controller.js');
 
 
 // Get all articles
