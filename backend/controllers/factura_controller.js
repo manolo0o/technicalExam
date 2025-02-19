@@ -3,7 +3,19 @@ const Factura = require('../models/factura_model.js');
 // Get all facturas
 exports.getAllFacturas = async (req, res) => {
     try {
-        const facturas = await Factura.find().populate('id_Cliente').populate('id_Producto');
+        const searchTerm = req.query.search;
+        let facturas;
+        if (searchTerm) {
+            facturas = await Factura.find({
+                $or: [
+                    { _id: searchTerm },
+                    { id_Cliente: { $regex: searchTerm, $options: 'i' } },
+                    { id_Producto: { $regex: searchTerm, $options: 'i' } }
+                ]
+            }).populate('id_Cliente').populate('id_Producto');
+        } else {
+            facturas = await Factura.find().populate('id_Cliente').populate('id_Producto');
+        }
         res.status(200).json(facturas);
     } catch (error) {
         res.status(500).json({ message: error.message });

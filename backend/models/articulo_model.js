@@ -1,10 +1,6 @@
 const mongoose = require('mongoose');
 
 const articuloSchema = new mongoose.Schema({
-    Ar_tCod: {
-        type: Number,
-        required: true
-    },
     Art_Nom: {
         type: String,
         required: true
@@ -21,7 +17,7 @@ const articuloSchema = new mongoose.Schema({
         type: Number,
         required: true
     },
-    Ar_tPV: {
+    Art_PV: {
         type: Number,
         required: true
     }
