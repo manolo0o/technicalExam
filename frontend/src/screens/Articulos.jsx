@@ -1,21 +1,56 @@
 import React, { useEffect, useState } from 'react';
+import ArticleFormPopup from '../components/ArticlePopUp.jsx';
 
 const Articulos = () => {
   const [articulos, setArticulos] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
+  const [showPopup, setShowPopup] = useState(false);
 
   useEffect(() => {
     fetch('http://localhost:3000/article')
       .then(response => response.json())
-      .then(data => setArticulos(data))
+      .then(data => {
+        if (Array.isArray(data)) {
+          setArticulos(data);
+        } else {
+          console.error('API response is not an array:', data);
+        }
+      })
       .catch(error => console.error('Error fetching articles:', error));
   }, []);
 
   const handleSearch = () => {
     fetch(`http://localhost:3000/article?search=${searchTerm}`)
       .then(response => response.json())
-      .then(data => setArticulos(data))
+      .then(data => {
+        if (Array.isArray(data)) {
+          setArticulos(data);
+        } else {
+          console.error('API response is not an array:', data);
+        }
+      })
       .catch(error => console.error('Error searching articles:', error));
+  };
+
+  const handleSave = (newArticle) => {
+    fetch('http://localhost:3000/article', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(newArticle)
+    })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
+      .then(data => {
+        setArticulos([...articulos, data]);
+        setShowPopup(false);
+      })
+      .catch(error => console.error('Error saving article:', error));
   };
 
   return (
@@ -31,7 +66,7 @@ const Articulos = () => {
           />
           <button onClick={handleSearch}>Buscar</button>
         </div>
-        <button className="add-button">Agregar Nuevo Articulo</button>
+        <button className="add-button" onClick={() => setShowPopup(true)}>Agregar Nuevo Articulo</button>
       </header>
       <table>
         <thead>
@@ -45,7 +80,7 @@ const Articulos = () => {
           </tr>
         </thead>
         <tbody>
-          {articulos.map(articulo => (
+          {Array.isArray(articulos) && articulos.map(articulo => (
             <tr key={articulo._id}>
               <td>{articulo._id}</td>
               <td>{articulo.Art_Nom}</td>
@@ -57,6 +92,7 @@ const Articulos = () => {
           ))}
         </tbody>
       </table>
+      {showPopup && <ArticleFormPopup onClose={() => setShowPopup(false)} onSave={handleSave} />}
     </div>
   );
 };
