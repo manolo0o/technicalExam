@@ -9,7 +9,6 @@ const LateralMenu = () => {
         <li><a href="#articulos">Articulos</a></li>
         <li><a href="#clientes">Clientes</a></li>
         <li><a href="#facturas">Facturas</a></li>
-        <li><a href="#factura-final">Factura Final</a></li>
       </ul>
     </div>
   );
