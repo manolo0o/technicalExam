@@ -14,10 +14,10 @@ const Facturas = () => {
       <table>
         <thead>
           <tr>
-            <th>FT_NumFactura</th>
-            <th>id_Cliente</th>
-            <th>FT_Fecha</th>
-            <th>id_Producto</th>
+            <th># Factura</th>
+            <th>Cliente id</th>
+            <th>Fecha</th>
+            <th>Producto id</th>
           </tr>
         </thead>
         <tbody>

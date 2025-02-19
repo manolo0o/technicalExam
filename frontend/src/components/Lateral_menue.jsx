@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import '../styles/Lateral_menue.css';
 
 const LateralMenu = () => {
@@ -6,9 +7,9 @@ const LateralMenu = () => {
     <div className="lateral-menu">
       <h2>Menu</h2>
       <ul>
-        <li><a href="#articulos">Articulos</a></li>
-        <li><a href="#clientes">Clientes</a></li>
-        <li><a href="#facturas">Facturas</a></li>
+        <li><Link to="/articulos">Articulos</Link></li>
+        <li><Link to="/clientes">Clientes</Link></li>
+        <li><Link to="/facturas">Facturas</Link></li>
       </ul>
     </div>
   );

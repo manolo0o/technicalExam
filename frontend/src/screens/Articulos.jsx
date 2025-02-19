@@ -14,12 +14,12 @@ const Articulos = () => {
       <table>
         <thead>
           <tr>
-            <th>Ar_tCod</th>
-            <th>Art_Nom</th>
-            <th>Art_Lab</th>
-            <th>Art_Saldo</th>
-            <th>Art_Costo</th>
-            <th>Ar_tPV</th>
+            <th>Codigo</th>
+            <th>Nombre</th>
+            <th>Laborarotio</th>
+            <th>Saldo</th>
+            <th>Costo</th>
+            <th>Precio Venta</th>
           </tr>
         </thead>
         <tbody>

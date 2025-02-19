@@ -14,13 +14,13 @@ const Clientes = () => {
       <table>
         <thead>
           <tr>
-            <th>Cl_Nombre</th>
-            <th>Cl_Apellido</th>
-            <th>Cl_Contacto</th>
-            <th>Cl_Nit</th>
-            <th>Cl_Documento</th>
-            <th>Cl_Cupo</th>
-            <th>Cl_Plazo</th>
+            <th>Nombre</th>
+            <th>Apellido</th>
+            <th>Contacto</th>
+            <th>Nit</th>
+            <th>Documento</th>
+            <th>Cupo</th>
+            <th>Plazo</th>
           </tr>
         </thead>
         <tbody>

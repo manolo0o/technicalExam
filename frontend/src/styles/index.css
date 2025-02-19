@@ -28,6 +28,7 @@ ul {
 
 .screen {
   padding: 20px;
+  margin-left: 16%; /* Adjust to fit the remaining screen space */
 }
 
 header {
@@ -71,4 +72,32 @@ table th, table td {
 
 table th {
   background-color: #f2f2f2;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .lateral-menu {
+    width: 100%;
+    height: auto;
+    position: relative;
+    box-shadow: none;
+  }
+
+  .screen {
+    margin-left: 0;
+    padding: 10px;
+  }
+
+  header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .finder {
+    margin-bottom: 10px;
+  }
+
+  table {
+    font-size: 14px;
+  }
 }
