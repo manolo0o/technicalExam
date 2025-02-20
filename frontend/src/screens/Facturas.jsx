@@ -83,20 +83,20 @@ const Facturas = () => {
             <th>Producto</th>
             <th>Cantidad</th>
             <th>Total</th>
-            <th>Acciones</th>
+            <th>Factura</th>
           </tr>
         </thead>
         <tbody>
           {Array.isArray(facturas) && facturas.map(factura => (
             <tr key={factura._id}>
-              <td>{factura.FT_NumFactura}</td>
-              <td>{factura.id_Cliente.Cl_Nombre} {factura.id_Cliente.Cl_Apellido}</td>
+              <td>{factura._id}</td>
+              <td>{factura.id_Cliente ? `${factura.id_Cliente.Cl_Nombre} ${factura.id_Cliente.Cl_Apellido}` : 'Cliente no disponible'}</td>
               <td>{factura.FT_Fecha}</td>
-              <td>{factura.id_Producto.Art_Nom}</td>
+              <td>{factura.id_Producto ? factura.id_Producto.Art_Nom : 'Producto no disponible'}</td>
               <td>{factura.cant_Producto}</td>
               <td>{factura.total}</td>
               <td>
-                <button onClick={() => handleSelectFactura(factura)}>Ver Detalles</button>
+                <button onClick={() => handleSelectFactura(factura)}>Ver Factura </button>
               </td>
             </tr>
           ))}
