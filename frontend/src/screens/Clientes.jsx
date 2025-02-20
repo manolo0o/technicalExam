@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
+import ClientesPopUp from '../components/ClientesPopUp.jsx';
 
 const Clientes = () => {
   const [clientes, setClientes] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
+  const [showPopup, setShowPopup] = useState(false);
 
   useEffect(() => {
     fetch('http://localhost:3000/clients')
@@ -18,6 +20,22 @@ const Clientes = () => {
       .catch(error => console.error('Error searching clients:', error));
   };
 
+  const handleSave = (newClient) => {
+    fetch('http://localhost:3000/clients', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(newClient)
+    })
+      .then(response => response.json())
+      .then(data => {
+        setClientes([...clientes, data]);
+        setShowPopup(false);
+      })
+      .catch(error => console.error('Error saving client:', error));
+  };
+
   return (
     <div className="screen">
       <header>
@@ -31,7 +49,7 @@ const Clientes = () => {
           />
           <button onClick={handleSearch}>Buscar</button>
         </div>
-        <button className="add-button">Agregar Nuevo Cliente</button>
+        <button className="add-button" onClick={() => setShowPopup(true)}>Agregar Nuevo Cliente</button>
       </header>
       <table>
         <thead>
@@ -59,6 +77,7 @@ const Clientes = () => {
           ))}
         </tbody>
       </table>
+      {showPopup && <ClientesPopUp onClose={() => setShowPopup(false)} onSave={handleSave} />}
     </div>
   );
 };
