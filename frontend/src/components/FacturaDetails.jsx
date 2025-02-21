@@ -7,13 +7,27 @@ const FacturaDetails = ({ factura, onClose }) => {
       <div className="popup-content">
         <h2>Detalles de la Factura</h2>
         <p><strong>Fecha:</strong> {factura.FT_Fecha}</p>
-        <p><strong>Cliente:</strong> {factura.id_Cliente ? `${factura.id_Cliente.Cl_Nombre} ${factura.id_Cliente.Cl_Apellido} `: 'not available'}</p>
-        <p><strong>Nit:</strong> {factura.id_Cliente.Cl_Nit}</p>
-        <p><strong>Producto:</strong> {factura.id_Producto.Art_Nom}</p>
-        <p><strong>Cantidad:</strong> {factura.cant_Producto}</p>
-        <p><strong>Precio Unitario:</strong> {factura.precio_Unitario}</p>
-        <p><strong>Total Producto:</strong> {factura.totalProd}</p>
-        <p><strong>Total:</strong> {factura.total}</p>
+        <p><strong>Cliente:</strong> {factura.id_Cliente ? `${factura.id_Cliente.Cl_Nombre} ${factura.id_Cliente.Cl_Apellido}` : 'No disponible'}</p>
+        <p><strong>Nit:</strong> {factura.id_Cliente ? factura.id_Cliente.Cl_Nit : 'No disponible'}</p>
+        <div className="line"></div>
+        <div className="productos-list">
+          <div className="producto-header">
+            <p><strong>PROD.</strong></p>
+            <p><strong>CANT.</strong></p>
+            <p><strong>P.UNITARIO</strong></p>
+            <p><strong>TOTAL</strong></p>
+          </div>
+          {factura.productos.map((producto, index) => (
+            <div key={index} className="producto-item">
+              <p>{producto.id_Producto ? producto.id_Producto.Art_Nom : 'No disponible'}</p>
+              <p>{producto.cant_Producto}</p>
+              <p>{producto.precio_Unitario}</p>
+              <p>{producto.totalProd}</p>
+            </div>
+          ))}
+        </div>
+        <div className="line"></div>
+        <p className="total"><strong>Total:</strong> {factura.total}</p>
         <button onClick={onClose}>Cerrar</button>
       </div>
     </div>
