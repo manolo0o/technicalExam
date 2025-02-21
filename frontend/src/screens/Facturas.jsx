@@ -34,25 +34,26 @@ const Facturas = () => {
       .catch(error => console.error('Error searching facturas:', error));
   };
 
-  const handleSave = (newFactura) => {
-    fetch('http://localhost:3000/factura', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(newFactura)
-    })
-      .then(response => {
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        return response.json();
-      })
-      .then(data => {
-        setFacturas([...facturas, data]);
-        setShowPopup(false);
-      })
-      .catch(error => console.error('Error saving factura:', error));
+  const handleSave = async (formData) => {
+    try {
+      const response = await fetch('http://localhost:3000/factura', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formData)
+      });
+
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+
+      const newFactura = await response.json();
+      setFacturas([...facturas, newFactura]);
+      setShowPopup(false);
+    } catch (error) {
+      console.error('Error saving factura:', error);
+    }
   };
 
   const handleSelectFactura = (factura) => {
@@ -78,25 +79,17 @@ const Facturas = () => {
         <thead>
           <tr>
             <th>Numero Factura</th>
-            <th>Cliente</th>
             <th>Fecha</th>
-            <th>Producto</th>
-            <th>Cantidad</th>
-            <th>Total</th>
-            <th>Factura</th>
+            <th>Detalles</th>
           </tr>
         </thead>
         <tbody>
           {Array.isArray(facturas) && facturas.map(factura => (
             <tr key={factura._id}>
               <td>{factura._id}</td>
-              <td>{factura.id_Cliente ? `${factura.id_Cliente.Cl_Nombre} ${factura.id_Cliente.Cl_Apellido}` : 'Cliente no disponible'}</td>
               <td>{factura.FT_Fecha}</td>
-              <td>{factura.id_Producto ? factura.id_Producto.Art_Nom : 'Producto no disponible'}</td>
-              <td>{factura.cant_Producto}</td>
-              <td>{factura.total}</td>
               <td>
-                <button onClick={() => handleSelectFactura(factura)}>Ver Factura </button>
+                <button onClick={() => handleSelectFactura(factura)}>Ver Detalles</button>
               </td>
             </tr>
           ))}
