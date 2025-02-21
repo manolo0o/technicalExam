@@ -7,11 +7,14 @@ const FacturaPopup = ({ onClose, onSave }) => {
   const [formData, setFormData] = useState({
     FT_Fecha: '',
     id_Cliente: '',
+    productos: [],
+    total: 0
+  });
+  const [currentProduct, setCurrentProduct] = useState({
     id_Producto: '',
     cant_Producto: '',
     precio_Unitario: '',
-    totalProd: '',
-    total: ''
+    totalProd: ''
   });
 
   useEffect(() => {
@@ -29,36 +32,51 @@ const FacturaPopup = ({ onClose, onSave }) => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+    setCurrentProduct({ ...currentProduct, [name]: value });
 
     if (name === 'id_Producto') {
       const selectedProduct = productos.find(product => product._id === value);
       if (selectedProduct) {
-        setFormData({
-          ...formData,
+        setCurrentProduct({
+          ...currentProduct,
           id_Producto: value,
           precio_Unitario: selectedProduct.Art_PV,
-          totalProd: selectedProduct.Art_PV * formData.cant_Producto
+          totalProd: selectedProduct.Art_PV * currentProduct.cant_Producto
         });
       }
     }
 
     if (name === 'cant_Producto') {
-      const selectedProduct = productos.find(product => product._id === formData.id_Producto);
+      const selectedProduct = productos.find(product => product._id === currentProduct.id_Producto);
       if (selectedProduct) {
         const totalProd = selectedProduct.Art_PV * value;
-        setFormData({
-          ...formData,
+        setCurrentProduct({
+          ...currentProduct,
           cant_Producto: value,
-          totalProd: totalProd,
-          total: totalProd // Assuming only one product for simplicity
+          totalProd: totalProd
         });
       }
     }
   };
 
+  const addProduct = () => {
+    const newTotal = formData.productos.reduce((acc, prod) => acc + prod.totalProd, 0) + currentProduct.totalProd;
+    setFormData({
+      ...formData,
+      productos: [...formData.productos, currentProduct],
+      total: newTotal
+    });
+    setCurrentProduct({
+      id_Producto: '',
+      cant_Producto: '',
+      precio_Unitario: '',
+      totalProd: ''
+    });
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
+    console.log('Datos enviados:', formData);
     onSave(formData);
   };
 
@@ -69,11 +87,11 @@ const FacturaPopup = ({ onClose, onSave }) => {
         <form onSubmit={handleSubmit}>
           <label>
             Fecha:
-            <input type="date" name="FT_Fecha" value={formData.FT_Fecha} onChange={handleChange} required />
+            <input type="date" name="FT_Fecha" value={formData.FT_Fecha} onChange={(e) => setFormData({ ...formData, FT_Fecha: e.target.value })} required />
           </label>
           <label>
             Cliente:
-            <select name="id_Cliente" value={formData.id_Cliente} onChange={handleChange} required>
+            <select name="id_Cliente" value={formData.id_Cliente} onChange={(e) => setFormData({ ...formData, id_Cliente: e.target.value })} required>
               <option value="">Seleccione un cliente</option>
               {clientes.map(cliente => (
                 <option key={cliente._id} value={cliente._id}>
@@ -84,7 +102,7 @@ const FacturaPopup = ({ onClose, onSave }) => {
           </label>
           <label>
             Producto:
-            <select name="id_Producto" value={formData.id_Producto} onChange={handleChange} required>
+            <select name="id_Producto" value={currentProduct.id_Producto} onChange={handleChange} required={!formData.productos.length}>
               <option value="">Seleccione un producto</option>
               {productos.map(producto => (
                 <option key={producto._id} value={producto._id}>
@@ -95,16 +113,23 @@ const FacturaPopup = ({ onClose, onSave }) => {
           </label>
           <label>
             Cantidad:
-            <input type="number" name="cant_Producto" value={formData.cant_Producto} onChange={handleChange} required />
+            <input type="number" name="cant_Producto" value={currentProduct.cant_Producto} onChange={handleChange} required={!formData.productos.length} />
           </label>
           <label>
             Precio Unitario:
-            <input type="number" name="precio_Unitario" value={formData.precio_Unitario} readOnly />
+            <input type="number" name="precio_Unitario" value={currentProduct.precio_Unitario} readOnly />
           </label>
           <label>
             Total Producto:
-            <input type="number" name="totalProd" value={formData.totalProd} readOnly />
+            <input type="number" name="totalProd" value={currentProduct.totalProd} readOnly />
           </label>
+          <button type="button" onClick={addProduct}>Agregar Producto</button>
+          <h3>Productos Agregados:</h3>
+          <ul>
+            {formData.productos.map((prod, index) => (
+              <li key={index}>{prod.id_Producto} - Cantidad: {prod.cant_Producto} - Total: {prod.totalProd}</li>
+            ))}
+          </ul>
           <label>
             Total:
             <input type="number" name="total" value={formData.total} readOnly />
