@@ -1,16 +1,6 @@
 const mongoose = require('mongoose');
 
-const facturaSchema = new mongoose.Schema({
-
-    FT_Fecha: {
-        type: Date,
-        required: true
-    },
-    id_Cliente: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Cliente',
-        required: true
-    },
+const productoSchema = new mongoose.Schema({
     id_Producto: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Articulo',
@@ -27,7 +17,20 @@ const facturaSchema = new mongoose.Schema({
     totalProd: {
         type: Number,
         required: true
+    }
+});
+
+const facturaSchema = new mongoose.Schema({
+    FT_Fecha: {
+        type: Date,
+        required: true
     },
+    id_Cliente: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Cliente',
+        required: true
+    },
+    productos: [productoSchema],
     total: {
         type: Number,
         required: true

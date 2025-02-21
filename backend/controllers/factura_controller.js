@@ -13,18 +13,17 @@ exports.getAllFacturas = async (req, res) => {
                     $or: [
                         { _id: searchTerm }
                     ]
-                }).populate('id_Cliente').populate('id_Producto');
+                }).populate('id_Cliente').populate('productos.id_Producto');
             } else {
                 facturas = await Factura.find({
                     $or: [
                         { FT_NumFactura: { $regex: searchTerm, $options: 'i' } },
-                        { id_Cliente: { $regex: searchTerm, $options: 'i' } },
-                        { id_Producto: { $regex: searchTerm, $options: 'i' } }
+                        { id_Cliente: { $regex: searchTerm, $options: 'i' } }
                     ]
-                }).populate('id_Cliente').populate('id_Producto');
+                }).populate('id_Cliente').populate('productos.id_Producto');
             }
         } else {
-            facturas = await Factura.find().populate('id_Cliente').populate('id_Producto');
+            facturas = await Factura.find().populate('id_Cliente').populate('productos.id_Producto');
         }
         res.status(200).json(facturas);
     } catch (error) {
@@ -35,7 +34,7 @@ exports.getAllFacturas = async (req, res) => {
 // Get factura by ID
 exports.getFacturaById = async (req, res) => {
     try {
-        const factura = await Factura.findById(req.params.id).populate('id_Cliente').populate('id_Producto');
+        const factura = await Factura.findById(req.params.id).populate('id_Cliente').populate('productos.id_Producto');
         if (!factura) {
             return res.status(404).json({ message: 'Factura not found' });
         }
@@ -48,13 +47,9 @@ exports.getFacturaById = async (req, res) => {
 // Create a new factura
 exports.createFactura = async (req, res) => {
     const factura = new Factura({
-        FT_NumFactura: req.body.FT_NumFactura,
-        id_Cliente: req.body.id_Cliente,
         FT_Fecha: req.body.FT_Fecha,
-        id_Producto: req.body.id_Producto,
-        cant_Producto: req.body.cant_Producto,
-        precio_Unitario: req.body.precio_Unitario,
-        totalProd: req.body.totalProd,
+        id_Cliente: req.body.id_Cliente,
+        productos: req.body.productos,
         total: req.body.total
     });
 
