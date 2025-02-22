@@ -16,6 +16,7 @@ const FacturaPopup = ({ onClose, onSave }) => {
     precio_Unitario: '',
     totalProd: ''
   });
+  const [error, setError] = useState('');
 
   useEffect(() => {
     // Fetch clientes and productos
@@ -49,17 +50,26 @@ const FacturaPopup = ({ onClose, onSave }) => {
     if (name === 'cant_Producto') {
       const selectedProduct = productos.find(product => product._id === currentProduct.id_Producto);
       if (selectedProduct) {
-        const totalProd = selectedProduct.Art_PV * value;
-        setCurrentProduct({
-          ...currentProduct,
-          cant_Producto: value,
-          totalProd: totalProd
-        });
+        if (value > selectedProduct.Art_Saldo) {
+          setError(`La cantidad no puede ser mayor que el saldo disponible (${selectedProduct.Art_Saldo})`);
+        } else {
+          setError('');
+          const totalProd = selectedProduct.Art_PV * value;
+          setCurrentProduct({
+            ...currentProduct,
+            cant_Producto: value,
+            totalProd: totalProd
+          });
+        }
       }
     }
   };
 
   const addProduct = () => {
+    if (error) {
+      alert(error);
+      return;
+    }
     const newTotal = formData.productos.reduce((acc, prod) => acc + prod.totalProd, 0) + currentProduct.totalProd;
     setFormData({
       ...formData,
@@ -76,6 +86,10 @@ const FacturaPopup = ({ onClose, onSave }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (error) {
+      alert(error);
+      return;
+    }
     console.log('Datos enviados:', formData);
     onSave(formData);
   };
@@ -123,6 +137,7 @@ const FacturaPopup = ({ onClose, onSave }) => {
             Total Producto:
             <input type="number" name="totalProd" value={currentProduct.totalProd} readOnly />
           </label>
+          {error && <p className="error">{error}</p>}
           <button type="button" onClick={addProduct}>Agregar Producto</button>
           <h3>Productos Agregados:</h3>
           <ul>
