@@ -1,4 +1,5 @@
 const Factura = require('../models/factura_model.js');
+const Articulo = require('../models/articulo_model.js'); // Asegúrate de importar el modelo de Articulo
 
 // Get all facturas or search facturas
 exports.getAllFacturas = async (req, res) => {
@@ -55,6 +56,14 @@ exports.createFactura = async (req, res) => {
 
     try {
         const newFactura = await factura.save();
+
+        // Actualizar el saldo de los artículos
+        for (const producto of req.body.productos) {
+            await Articulo.findByIdAndUpdate(producto.id_Producto, {
+                $inc: { Art_Saldo: -producto.cant_Producto }
+            });
+        }
+
         res.status(201).json(newFactura);
     } catch (error) {
         res.status(400).json({ message: error.message });
