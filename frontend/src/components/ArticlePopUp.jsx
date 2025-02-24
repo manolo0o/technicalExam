@@ -9,6 +9,7 @@ const ArticleFormPopup = ({ onClose, onSave }) => {
     Art_Costo: '',
     Art_PV: ''
   });
+  const [error, setError] = useState('');
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -17,6 +18,11 @@ const ArticleFormPopup = ({ onClose, onSave }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (parseFloat(formData.Art_Costo) >= parseFloat(formData.Art_PV)) {
+      setError('El precio de venta debe ser mayor al costo');
+      return;
+    }
+    setError('');
     onSave(formData);
   };
 
@@ -42,9 +48,10 @@ const ArticleFormPopup = ({ onClose, onSave }) => {
             <input type="number" name="Art_Costo" value={formData.Art_Costo} onChange={handleChange} required />
           </label>
           <label>
-            Precio Venta:
+            Precio de venta:
             <input type="number" name="Art_PV" value={formData.Art_PV} onChange={handleChange} required />
           </label>
+          {error && <p className="error">{error}</p>}
           <button type="submit">Guardar</button>
           <button type="button" onClick={onClose}>Cancelar</button>
         </form>
