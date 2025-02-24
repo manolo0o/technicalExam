@@ -10,6 +10,7 @@ const LateralMenu = () => {
         <li><Link to="/articulos">Articulos</Link></li>
         <li><Link to="/clientes">Clientes</Link></li>
         <li><Link to="/facturas">Facturas</Link></li>
+        <li><Link to="/kardex">Kardex</Link></li>
       </ul>
     </div>
   );

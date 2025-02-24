@@ -6,6 +6,7 @@ import Articulos from './screens/Articulos.jsx';
 import Clientes from './screens/Clientes.jsx';
 import Facturas from './screens/Facturas.jsx';
 import LateralMenu from './components/Lateral_menue';
+import  Kardex from './screens/Kardex.jsx';
 import './styles/index.css'; // Import the global CSS file
 
 const App = () => {
@@ -17,6 +18,7 @@ const App = () => {
           <Route path="/articulos" element={<Articulos />} />
           <Route path="/clientes" element={<Clientes />} />
           <Route path="/facturas" element={<Facturas />} />
+          <Route path="/kardex" element={<Kardex />} />
         </Routes>
       </div>
     </Router>
