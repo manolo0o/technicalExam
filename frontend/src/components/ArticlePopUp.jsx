@@ -7,7 +7,8 @@ const ArticleFormPopup = ({ onClose, onSave }) => {
     Art_Lab: '',
     Art_Saldo: '',
     Art_Costo: '',
-    Art_PV: ''
+    Art_PV: '',
+    Art_Fecha_Ingreso: '',
   });
   const [error, setError] = useState('');
 
@@ -26,11 +27,37 @@ const ArticleFormPopup = ({ onClose, onSave }) => {
     onSave(formData);
   };
 
+  const handleSave = async (formData) => {
+    try {
+      const response = await fetch('http://localhost:3000/article', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formData)
+      });
+
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+
+      const newArticulo = await response.json();
+      setArticulos([...articulos, newArticulo]);
+      setShowPopup(false);
+    } catch (error) {
+      console.error('Error saving article:', error);
+    }
+  };
+
   return (
     <div className="popup-overlay">
       <div className="popup-content">
         <h2>Agregar Nuevo Articulo</h2>
         <form onSubmit={handleSubmit}>
+          <label>
+            Fecha:
+            <input type="date" name="Art_Fecha_Ingreso" value={formData.Art_Fecha} onChange={handleChange} required />
+          </label>
           <label>
             Nombre:
             <input type="text" name="Art_Nom" value={formData.Art_Nom} onChange={handleChange} required />
