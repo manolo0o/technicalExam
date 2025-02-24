@@ -7,7 +7,7 @@ const Articulos = () => {
   const [showPopup, setShowPopup] = useState(false);
 
   useEffect(() => {
-    fetch('http://localhost:3000/article')
+    fetch('http://localhost:3000/articles')
       .then(response => response.json())
       .then(data => {
         if (Array.isArray(data)) {
@@ -20,7 +20,7 @@ const Articulos = () => {
   }, []);
 
   const handleSearch = () => {
-    fetch(`http://localhost:3000/article?search=${searchTerm}`)
+    fetch(`http://localhost:3000/articles?search=${searchTerm}`)
       .then(response => response.json())
       .then(data => {
         if (Array.isArray(data)) {
@@ -33,7 +33,7 @@ const Articulos = () => {
   };
 
   const handleSave = (newArticle) => {
-    fetch('http://localhost:3000/article', {
+    fetch('http://localhost:3000/articles', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'

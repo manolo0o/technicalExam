@@ -1,4 +1,5 @@
 const Articulo = require('../models/articulo_model.js');
+const FacturaKardex = require('../models/kardex_model.js');
 
 // Get all articles or search articles
 exports.getAllArticles = async (req, res) => {
@@ -48,19 +49,32 @@ exports.getArticleById = async (req, res) => {
 
 // Create a new article
 exports.createArticle = async (req, res) => {
-    const article = new Articulo({
-      Art_Fecha_Ingreso: req.body.Art_Fecha_Ingreso,
-      Art_Nom: req.body.Art_Nom,
-      Art_Lab: req.body.Art_Lab,
-      Art_Saldo: req.body.Art_Saldo,
-      Art_Costo: req.body.Art_Costo,
-      Art_PV: req.body.Art_PV
+  const articulo = new Articulo({
+    Art_Fecha_Ingreso: req.body.Art_Fecha_Ingreso,
+    Art_Nom: req.body.Art_Nom,
+    Art_Lab: req.body.Art_Lab,
+    Art_Saldo: req.body.Art_Saldo,
+    Art_Costo: req.body.Art_Costo,
+    Art_PV: req.body.Art_PV
+  });
+
+  try {
+    const newArticulo = await articulo.save();
+
+    // Add the new article to the kardex collection
+    const kardexEntry = new FacturaKardex({
+      FK_Fecha_Ingreso: newArticulo.Art_Fecha_Ingreso,
+      FK_Nom: newArticulo.Art_Nom,
+      FK_Lab: newArticulo.Art_Lab,
+      FK_Saldo: newArticulo.Art_Saldo,
+      FK_Costo: newArticulo.Art_Costo,
+      FK_PV: newArticulo.Art_PV
     });
 
-    try {
-      const newArticle = await article.save();
-      res.status(201).json(newArticle);
-    } catch (error) {
-      res.status(400).json({ message: error.message });
-    }
+    await kardexEntry.save();
+
+    res.status(201).json(newArticulo);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
 };

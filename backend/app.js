@@ -18,7 +18,7 @@ app.use(express.json());
 
 // api routes
 app.use('/clients', clienteRoutes);
-app.use('/article', articuloRoutes);
+app.use('/articles', articuloRoutes);
 app.use('/factura', facturaRoutes);
 app.use('/kardex', kardexRoutes);
 
