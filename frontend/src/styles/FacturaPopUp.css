@@ -48,7 +48,7 @@
   cursor: pointer;
 }
 
-.popup-content button:hover {
+.popup-content .popUpButtonFactura:hover {
   background-color: #0056b3;
 }
 

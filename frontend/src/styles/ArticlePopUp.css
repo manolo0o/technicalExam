@@ -36,7 +36,7 @@
   margin-top: 5px;
 }
 
-.popup-content form button {
+.popup-content form .buttonPopUpArticle {
   margin-top: 10px;
   padding: 10px;
   background-color: #007bff;
@@ -45,7 +45,7 @@
   cursor: pointer;
 }
 
-.popup-content form button:hover {
+.popup-content form .buttonPopUpArticle:hover {
   background-color: #0056b3;
 }
 

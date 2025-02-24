@@ -44,7 +44,7 @@
   border-top: 1px solid #ccc;
 }
 
-button {
+.facturaDetailButton {
   margin-top: 20px;
   padding: 10px 20px;
   background-color: #007bff;
@@ -54,6 +54,6 @@ button {
   cursor: pointer;
 }
 
-button:hover {
+.facturaDetailButton:hover {
   background-color: #0056b3;
 }

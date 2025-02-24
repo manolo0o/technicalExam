@@ -45,6 +45,6 @@
   cursor: pointer;
 }
 
-.popup-content button:hover {
+.popup-content .popUpButtonClient:hover {
   background-color: #0056b3;
 }

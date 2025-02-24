@@ -28,7 +28,7 @@ const FacturaDetails = ({ factura, onClose }) => {
         </div>
         <div className="line"></div>
         <p className="total"><strong>Total:</strong> {factura.total}</p>
-        <button onClick={onClose}>Cerrar</button>
+        <button className='facturaDetailButton' onClick={onClose}>Cerrar</button>
       </div>
     </div>
   );

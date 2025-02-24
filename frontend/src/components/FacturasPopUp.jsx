@@ -149,8 +149,8 @@ const FacturaPopup = ({ onClose, onSave }) => {
             Total:
             <input type="number" name="total" value={formData.total} readOnly />
           </label>
-          <button type="submit">Guardar</button>
-          <button type="button" onClick={onClose}>Cancelar</button>
+          <button className='popUpButtonFactura' type="submit">Guardar</button>
+          <button className='popUpButtonFactura' type="button" onClick={onClose}>Cancelar</button>
         </form>
       </div>
     </div>

@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import FacturaDetails from '../components/FacturaDetails.jsx';
 import FacturaPopup from '../components/FacturasPopUp.jsx';
+import viewDetails from '../assets/viewDetails.svg';
+import '../styles/index.css';
 
 const Facturas = () => {
   const [facturas, setFacturas] = useState([]);
@@ -88,8 +90,14 @@ const Facturas = () => {
             <tr key={factura._id}>
               <td>{factura._id}</td>
               <td>{factura.FT_Fecha}</td>
-              <td>
-                <button onClick={() => handleSelectFactura(factura)}>Ver Detalles</button>
+              <td className='tdDetails' style={{display: 'flex'
+              , justifyContent: 'center'
+              , alignItems: 'center'
+              , width: 'auto'
+              }}>
+                <button className="ButtonDetails" onClick={() => handleSelectFactura(factura)}>
+                  <img src={viewDetails}/>
+                </button>
               </td>
             </tr>
           ))}

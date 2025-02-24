@@ -55,8 +55,8 @@ const ClientesPopUp = ({ onClose, onSave }) => {
             Plazo:
             <input type="number" name="Cl_Plazo" value={formData.Cl_Plazo} onChange={handleChange} required />
           </label>
-          <button type="submit">Guardar</button>
-          <button type="button" onClick={onClose}>Cancelar</button>
+          <button className='popUpButtonClient' type="submit">Guardar</button>
+          <button className='popUpButtonClient' type="button" onClick={onClose}>Cancelar</button>
         </form>
       </div>
     </div>

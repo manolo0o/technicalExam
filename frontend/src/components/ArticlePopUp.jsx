@@ -52,8 +52,8 @@ const ArticleFormPopup = ({ onClose, onSave }) => {
             <input type="number" name="Art_PV" value={formData.Art_PV} onChange={handleChange} required />
           </label>
           {error && <p className="error">{error}</p>}
-          <button type="submit">Guardar</button>
-          <button type="button" onClick={onClose}>Cancelar</button>
+          <button className="buttonPopUpArticle" type="submit">Guardar</button>
+          <button className="buttonPopUpArticle" type="button" onClick={onClose}>Cancelar</button>
         </form>
       </div>
     </div>
