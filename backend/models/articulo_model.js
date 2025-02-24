@@ -1,6 +1,10 @@
 const mongoose = require('mongoose');
 
 const articuloSchema = new mongoose.Schema({
+    Art_Fecha_Ingreso: {
+        type: Date,
+        required: true
+    },
     Art_Nom: {
         type: String,
         required: true
@@ -21,7 +25,7 @@ const articuloSchema = new mongoose.Schema({
         type: Number,
         required: true
     }
-},{ collection: 'articulos' });
+}, { collection: 'articulos' });
 
 const Articulo = mongoose.model('Articulo', articuloSchema);
 

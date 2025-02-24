@@ -49,17 +49,18 @@ exports.getArticleById = async (req, res) => {
 // Create a new article
 exports.createArticle = async (req, res) => {
     const article = new Articulo({
-        Art_Nom: req.body.Art_Nom,
-        Art_Lab: req.body.Art_Lab,
-        Art_Saldo: req.body.Art_Saldo,
-        Art_Costo: req.body.Art_Costo,
-        Art_PV: req.body.Art_PV
+      Art_Fecha_Ingreso: req.body.Art_Fecha_Ingreso,
+      Art_Nom: req.body.Art_Nom,
+      Art_Lab: req.body.Art_Lab,
+      Art_Saldo: req.body.Art_Saldo,
+      Art_Costo: req.body.Art_Costo,
+      Art_PV: req.body.Art_PV
     });
 
     try {
-        const newArticle = await article.save();
-        res.status(201).json(newArticle);
+      const newArticle = await article.save();
+      res.status(201).json(newArticle);
     } catch (error) {
-        res.status(400).json({ message: error.message });
+      res.status(400).json({ message: error.message });
     }
 };
